@@ -8,22 +8,31 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(process.env.SUPABASE_URL , process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
 export async function fetchRevenue() {
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
+    console.log('Fetching revenue data...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    // Use Supabase client to fetch data from the 'revenue' table
+    const { data, error } = await supabase
+      .from('revenue')  // Specify the 'revenue' table
+      .select('*');              // Select all columns
 
-    const data = await sql<Revenue>`SELECT * FROM revenue`;
+    if (error) {
+      throw new Error(`Error fetching revenue: ${error.message}`);
+    }
 
-    // console.log('Data fetch completed after 3 seconds.');
+    console.log('Data fetch completed after 3 seconds.');
 
-    return data.rows;
+    return data;
   } catch (error) {
-    console.error('Database Error:', error);
+    console.error('Error:', error);
     throw new Error('Failed to fetch revenue data.');
   }
 }
