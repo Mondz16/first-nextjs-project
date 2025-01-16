@@ -10,7 +10,9 @@ import {
 import { formatCurrency } from './utils';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(process.env.SUPABASE_URL , process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+const supabaseUrl = 'https://hvqdnmrwqvikipxqpjap.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh2cWRubXJ3cXZpa2lweHFwamFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYwNjM0ODMsImV4cCI6MjA1MTYzOTQ4M30._xg4vV8zxCtMhlhgo-U9RRJ1NMrOki67ALHa7rSdL2E';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function fetchRevenue() {
   try {
